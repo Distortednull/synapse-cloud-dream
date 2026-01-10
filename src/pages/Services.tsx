@@ -7,6 +7,8 @@ import {
   Cloud, 
   Atom, 
   Workflow,
+  Code2,
+  Wrench,
   ArrowRight,
   CheckCircle2
 } from "lucide-react";
@@ -26,6 +28,19 @@ const services = [
     ],
   },
   {
+    icon: Code2,
+    title: "Full Stack Development",
+    description: "Build modern, scalable web applications from frontend to backend.",
+    features: [
+      "React & Next.js applications",
+      "Node.js & Python backends",
+      "RESTful & GraphQL APIs",
+      "Database design & optimization",
+      "Responsive UI/UX design",
+      "E-commerce solutions",
+    ],
+  },
+  {
     icon: Cloud,
     title: "Cloud Infrastructure",
     description: "Build resilient, scalable cloud architecture that grows with your needs.",
@@ -36,6 +51,19 @@ const services = [
       "Container orchestration (K8s)",
       "Infrastructure as Code",
       "Performance optimization",
+    ],
+  },
+  {
+    icon: Wrench,
+    title: "IT Troubleshooting",
+    description: "Expert diagnosis and resolution for all your technical challenges.",
+    features: [
+      "Hardware diagnostics & repair",
+      "Software installation & configuration",
+      "Network setup & troubleshooting",
+      "System performance optimization",
+      "Security audits & fixes",
+      "Remote & on-site support",
     ],
   },
   {

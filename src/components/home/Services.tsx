@@ -1,4 +1,4 @@
-import { Brain, Cloud, Atom, Workflow } from "lucide-react";
+import { Brain, Cloud, Atom, Workflow, Code2, Wrench } from "lucide-react";
 
 const services = [
   {
@@ -8,10 +8,22 @@ const services = [
     features: ["Custom Models", "ML Pipelines", "AI Web Apps"],
   },
   {
+    icon: Code2,
+    title: "Full Stack Development",
+    description: "End-to-end web applications with modern frameworks, APIs, and responsive designs.",
+    features: ["React/Next.js", "Node.js", "Databases"],
+  },
+  {
     icon: Cloud,
     title: "Cloud Infrastructure",
     description: "DevOps automation, cloud orchestration, and serverless solutions for scalable systems.",
     features: ["DevOps", "Cloud Native", "Serverless"],
+  },
+  {
+    icon: Wrench,
+    title: "IT Troubleshooting",
+    description: "Expert diagnosis and resolution of hardware, software, and network issues.",
+    features: ["Diagnostics", "System Repair", "Network"],
   },
   {
     icon: Atom,
