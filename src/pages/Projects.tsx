@@ -1,9 +1,42 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Github, Brain, Cloud, Atom, Workflow } from "lucide-react";
+import { ExternalLink, Github, Brain, Cloud, Atom, Workflow, Code2, Wrench } from "lucide-react";
 
 const projects = [
+  {
+    title: "E-Commerce Platform",
+    description: "Full-stack e-commerce solution with payment integration, inventory management, and admin dashboard.",
+    category: "Web Dev",
+    icon: Code2,
+    tags: ["Next.js", "Stripe", "PostgreSQL"],
+    links: {
+      demo: "#",
+      github: "#",
+    },
+  },
+  {
+    title: "Portfolio CMS",
+    description: "Custom content management system for creative professionals with drag-and-drop editing and media optimization.",
+    category: "Web Dev",
+    icon: Code2,
+    tags: ["React", "Node.js", "MongoDB"],
+    links: {
+      demo: "#",
+      github: "#",
+    },
+  },
+  {
+    title: "Real-Time Dashboard",
+    description: "Interactive analytics dashboard with live data visualization, user authentication, and role-based access.",
+    category: "Web Dev",
+    icon: Code2,
+    tags: ["React", "Socket.io", "Express"],
+    links: {
+      demo: "#",
+      github: "#",
+    },
+  },
   {
     title: "Neural Network Visualizer",
     description: "Interactive web application for visualizing and understanding neural network architectures and training processes.",
@@ -49,6 +82,17 @@ const projects = [
     },
   },
   {
+    title: "IT Support Ticketing System",
+    description: "Comprehensive helpdesk solution with automated ticket routing, knowledge base, and SLA tracking.",
+    category: "IT Support",
+    icon: Wrench,
+    tags: ["React", "Node.js", "Redis"],
+    links: {
+      demo: "#",
+      github: "#",
+    },
+  },
+  {
     title: "AI-Powered Code Assistant",
     description: "Intelligent code completion and generation tool using large language models for enhanced developer productivity.",
     category: "AI/ML",
@@ -83,7 +127,7 @@ const Projects = () => {
                 Our <span className="glow-text">Projects</span>
               </h1>
               <p className="text-lg text-muted-foreground opacity-0 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-                Explore our portfolio of AI, cloud, and quantum computing projects. 
+                Explore our portfolio of web development, AI, cloud, and quantum computing projects. 
                 Each one pushes the boundaries of what's possible.
               </p>
             </div>
