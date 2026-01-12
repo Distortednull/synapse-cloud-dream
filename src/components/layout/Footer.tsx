@@ -38,9 +38,9 @@ export function Footer() {
           <div className="md:col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-                <span className="font-display font-bold text-primary-foreground text-sm">DN</span>
+                <span className="font-display font-bold text-primary-foreground text-sm">BΔ</span>
               </div>
-              <span className="font-display font-semibold text-lg">DistortedNull</span>
+              <span className="font-display font-semibold text-lg">BLACK DELTA TECHNOLOGIES</span>
             </Link>
             <p className="text-muted-foreground text-sm max-w-md mb-6">
               Exploring the Future of AI, Cloud, and Quantum Computing. Building scalable, 
@@ -108,7 +108,7 @@ export function Footer() {
 
         <div className="border-t border-border/50 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-muted-foreground text-sm">
-            © {new Date().getFullYear()} DistortedNull. All rights reserved.
+            © {new Date().getFullYear()} BLACK DELTA TECHNOLOGIES. All rights reserved.
           </p>
           <p className="text-muted-foreground text-xs">
             Built with AI, powered by curiosity ✨

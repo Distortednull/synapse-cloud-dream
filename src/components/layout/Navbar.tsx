@@ -24,10 +24,10 @@ export function Navbar() {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-              <span className="font-display font-bold text-primary-foreground text-sm">DN</span>
+              <span className="font-display font-bold text-primary-foreground text-sm">BΔ</span>
             </div>
             <span className="font-display font-semibold text-lg text-foreground group-hover:text-primary transition-colors">
-              DistortedNull
+              BLACK DELTA
             </span>
           </Link>
 

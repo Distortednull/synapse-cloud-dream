@@ -1,118 +1,9 @@
+import { Link } from "react-router-dom";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Github, Brain, Cloud, Atom, Workflow, Code2, Wrench } from "lucide-react";
-
-const projects = [
-  {
-    title: "E-Commerce Platform",
-    description: "Full-stack e-commerce solution with payment integration, inventory management, and admin dashboard.",
-    category: "Web Dev",
-    icon: Code2,
-    tags: ["Next.js", "Stripe", "PostgreSQL"],
-    links: {
-      demo: "#",
-      github: "#",
-    },
-  },
-  {
-    title: "Portfolio CMS",
-    description: "Custom content management system for creative professionals with drag-and-drop editing and media optimization.",
-    category: "Web Dev",
-    icon: Code2,
-    tags: ["React", "Node.js", "MongoDB"],
-    links: {
-      demo: "#",
-      github: "#",
-    },
-  },
-  {
-    title: "Real-Time Dashboard",
-    description: "Interactive analytics dashboard with live data visualization, user authentication, and role-based access.",
-    category: "Web Dev",
-    icon: Code2,
-    tags: ["React", "Socket.io", "Express"],
-    links: {
-      demo: "#",
-      github: "#",
-    },
-  },
-  {
-    title: "Neural Network Visualizer",
-    description: "Interactive web application for visualizing and understanding neural network architectures and training processes.",
-    category: "AI/ML",
-    icon: Brain,
-    tags: ["TensorFlow.js", "React", "D3.js"],
-    links: {
-      demo: "#",
-      github: "#",
-    },
-  },
-  {
-    title: "Cloud Orchestration Platform",
-    description: "Automated cloud infrastructure management tool with multi-cloud support and intelligent resource allocation.",
-    category: "Cloud",
-    icon: Cloud,
-    tags: ["Kubernetes", "Terraform", "Go"],
-    links: {
-      demo: "#",
-      github: "#",
-    },
-  },
-  {
-    title: "Quantum Circuit Simulator",
-    description: "Browser-based quantum computing simulator for designing and testing quantum circuits with visual feedback.",
-    category: "Quantum",
-    icon: Atom,
-    tags: ["Qiskit", "Python", "WebAssembly"],
-    links: {
-      demo: "#",
-      github: "#",
-    },
-  },
-  {
-    title: "MLOps Pipeline Framework",
-    description: "End-to-end machine learning operations framework for automated model training, deployment, and monitoring.",
-    category: "Workflow",
-    icon: Workflow,
-    tags: ["MLflow", "Docker", "FastAPI"],
-    links: {
-      demo: "#",
-      github: "#",
-    },
-  },
-  {
-    title: "IT Support Ticketing System",
-    description: "Comprehensive helpdesk solution with automated ticket routing, knowledge base, and SLA tracking.",
-    category: "IT Support",
-    icon: Wrench,
-    tags: ["React", "Node.js", "Redis"],
-    links: {
-      demo: "#",
-      github: "#",
-    },
-  },
-  {
-    title: "AI-Powered Code Assistant",
-    description: "Intelligent code completion and generation tool using large language models for enhanced developer productivity.",
-    category: "AI/ML",
-    icon: Brain,
-    tags: ["PyTorch", "Transformers", "VS Code"],
-    links: {
-      github: "#",
-    },
-  },
-  {
-    title: "Serverless Data Pipeline",
-    description: "Event-driven data processing pipeline with automatic scaling and real-time analytics capabilities.",
-    category: "Cloud",
-    icon: Cloud,
-    tags: ["AWS Lambda", "Apache Kafka", "Python"],
-    links: {
-      github: "#",
-    },
-  },
-];
+import { ExternalLink, Github } from "lucide-react";
+import { projects } from "@/data/projects";
 
 const Projects = () => {
   return (
@@ -139,58 +30,80 @@ const Projects = () => {
           <div className="container mx-auto px-6">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {projects.map((project, index) => (
-                <div
-                  key={project.title}
-                  className="group p-6 rounded-2xl bg-card border border-border card-hover opacity-0 animate-fade-in-up"
-                  style={{ animationDelay: `${index * 0.1}s` }}
+                <Link
+                  key={project.id}
+                  to={`/projects/${project.id}`}
+                  className="group block"
                 >
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                      <project.icon className="w-5 h-5 text-primary" />
-                    </div>
-                    <span className="text-xs text-muted-foreground px-2 py-1 rounded-md bg-secondary">
-                      {project.category}
-                    </span>
-                  </div>
-
-                  <h3 className="font-display font-semibold text-lg text-foreground mb-2 group-hover:text-primary transition-colors">
-                    {project.title}
-                  </h3>
-
-                  <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
-                    {project.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-xs px-2 py-1 rounded-md bg-secondary text-muted-foreground"
-                      >
-                        {tag}
+                  <div
+                    className="rounded-2xl bg-card border border-border card-hover overflow-hidden opacity-0 animate-fade-in-up"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    {/* Project Image */}
+                    <div className="relative aspect-video overflow-hidden">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+                      <span className="absolute bottom-3 left-3 text-xs text-primary-foreground px-2 py-1 rounded-md bg-primary">
+                        {project.category}
                       </span>
-                    ))}
-                  </div>
+                    </div>
 
-                  <div className="flex items-center gap-3 pt-4 border-t border-border">
-                    {project.links.demo && (
-                      <Button variant="ghost" size="sm" asChild>
-                        <a href={project.links.demo} target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="w-4 h-4 mr-1" />
-                          Demo
-                        </a>
-                      </Button>
-                    )}
-                    {project.links.github && (
-                      <Button variant="ghost" size="sm" asChild>
-                        <a href={project.links.github} target="_blank" rel="noopener noreferrer">
-                          <Github className="w-4 h-4 mr-1" />
-                          Code
-                        </a>
-                      </Button>
-                    )}
+                    {/* Project Info */}
+                    <div className="p-6">
+                      <h3 className="font-display font-semibold text-lg text-foreground mb-2 group-hover:text-primary transition-colors">
+                        {project.title}
+                      </h3>
+
+                      <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
+                        {project.description}
+                      </p>
+
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {project.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="text-xs px-2 py-1 rounded-md bg-secondary text-muted-foreground"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="flex items-center gap-3 pt-4 border-t border-border">
+                        {project.links.demo && (
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            onClick={(e) => {
+                              e.preventDefault();
+                              window.open(project.links.demo, '_blank');
+                            }}
+                          >
+                            <ExternalLink className="w-4 h-4 mr-1" />
+                            Demo
+                          </Button>
+                        )}
+                        {project.links.github && (
+                          <Button 
+                            variant="ghost" 
+                            size="sm"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              window.open(project.links.github, '_blank');
+                            }}
+                          >
+                            <Github className="w-4 h-4 mr-1" />
+                            Code
+                          </Button>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
