@@ -2,20 +2,21 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { 
-  Brain, 
-  Cloud, 
-  Atom, 
-  Workflow,
-  Code2,
-  Wrench,
-  ArrowRight,
-  CheckCircle2
-} from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ScrollAnimationWrapper } from "@/components/ui/ScrollAnimationWrapper";
+
+import serviceAi from "@/assets/service-ai.jpg";
+import serviceFullstack from "@/assets/service-fullstack.jpg";
+import serviceCloud from "@/assets/service-cloud.jpg";
+import serviceIt from "@/assets/service-it.jpg";
+import serviceQuantum from "@/assets/service-quantum.jpg";
+import serviceWorkflow from "@/assets/service-workflow.jpg";
+import serviceSecurity from "@/assets/service-security.jpg";
+import serviceAnalytics from "@/assets/service-analytics.jpg";
 
 const services = [
   {
-    icon: Brain,
+    image: serviceAi,
     title: "AI & ML Solutions",
     description: "Transform your business with intelligent systems that learn, adapt, and deliver insights.",
     features: [
@@ -28,7 +29,7 @@ const services = [
     ],
   },
   {
-    icon: Code2,
+    image: serviceFullstack,
     title: "Full Stack Development",
     description: "Build modern, scalable web applications from frontend to backend.",
     features: [
@@ -41,7 +42,7 @@ const services = [
     ],
   },
   {
-    icon: Cloud,
+    image: serviceCloud,
     title: "Cloud Infrastructure",
     description: "Build resilient, scalable cloud architecture that grows with your needs.",
     features: [
@@ -54,7 +55,7 @@ const services = [
     ],
   },
   {
-    icon: Wrench,
+    image: serviceIt,
     title: "IT Troubleshooting",
     description: "Expert diagnosis and resolution for all your technical challenges.",
     features: [
@@ -67,7 +68,7 @@ const services = [
     ],
   },
   {
-    icon: Atom,
+    image: serviceQuantum,
     title: "Quantum Computing",
     description: "Explore the next frontier of computing with quantum algorithms and research.",
     features: [
@@ -80,7 +81,7 @@ const services = [
     ],
   },
   {
-    icon: Workflow,
+    image: serviceWorkflow,
     title: "Workflow Optimization",
     description: "Streamline operations with intelligent automation and monitoring.",
     features: [
@@ -90,6 +91,32 @@ const services = [
       "MLOps implementation",
       "Data pipeline design",
       "Custom tooling development",
+    ],
+  },
+  {
+    image: serviceSecurity,
+    title: "Cybersecurity",
+    description: "Protect your digital assets with comprehensive security solutions and threat prevention.",
+    features: [
+      "Threat detection & response",
+      "Security audits & penetration testing",
+      "Data encryption & protection",
+      "Identity & access management",
+      "Compliance & risk assessment",
+      "Security awareness training",
+    ],
+  },
+  {
+    image: serviceAnalytics,
+    title: "Data Analytics",
+    description: "Transform raw data into actionable insights with advanced analytics and visualization.",
+    features: [
+      "Business intelligence dashboards",
+      "Predictive analytics",
+      "Data warehousing",
+      "Real-time reporting",
+      "Data visualization",
+      "Custom analytics solutions",
     ],
   },
 ];
@@ -102,15 +129,15 @@ const Services = () => {
         {/* Hero Section */}
         <section className="py-16 md:py-24">
           <div className="container mx-auto px-6">
-            <div className="max-w-3xl mx-auto text-center">
-              <h1 className="section-title mb-6 opacity-0 animate-fade-in">
+            <ScrollAnimationWrapper className="max-w-3xl mx-auto text-center">
+              <h1 className="section-title mb-6">
                 Our <span className="glow-text">Services</span>
               </h1>
-              <p className="text-lg text-muted-foreground opacity-0 animate-fade-in" style={{ animationDelay: "0.1s" }}>
+              <p className="text-lg text-muted-foreground">
                 From AI development to quantum computing research, we deliver 
                 cutting-edge solutions tailored to your needs.
               </p>
-            </div>
+            </ScrollAnimationWrapper>
           </div>
         </section>
 
@@ -125,11 +152,12 @@ const Services = () => {
                     index % 2 === 1 ? 'lg:flex-row-reverse' : ''
                   }`}
                 >
-                  <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
+                  <ScrollAnimationWrapper 
+                    direction={index % 2 === 0 ? "left" : "right"}
+                    delay={0.1}
+                    className={index % 2 === 1 ? 'lg:order-2' : ''}
+                  >
                     <div className="flex items-center gap-4 mb-4">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                        <service.icon className="w-6 h-6 text-primary" />
-                      </div>
                       <h2 className="text-2xl md:text-3xl font-display font-bold">
                         {service.title}
                       </h2>
@@ -145,15 +173,21 @@ const Services = () => {
                         </li>
                       ))}
                     </ul>
-                  </div>
+                  </ScrollAnimationWrapper>
                   
-                  <div className={`${index % 2 === 1 ? 'lg:order-1' : ''}`}>
-                    <div className="aspect-video rounded-2xl bg-gradient-to-br from-primary/10 via-card to-accent/10 p-1 glow-box">
-                      <div className="w-full h-full rounded-xl bg-card/80 border border-border/50 flex items-center justify-center">
-                        <service.icon className="w-24 h-24 text-primary/20" />
-                      </div>
+                  <ScrollAnimationWrapper 
+                    direction={index % 2 === 0 ? "right" : "left"}
+                    delay={0.2}
+                    className={index % 2 === 1 ? 'lg:order-1' : ''}
+                  >
+                    <div className="aspect-video rounded-2xl overflow-hidden glow-box">
+                      <img 
+                        src={service.image} 
+                        alt={service.title}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
-                  </div>
+                  </ScrollAnimationWrapper>
                 </div>
               ))}
             </div>
@@ -162,19 +196,21 @@ const Services = () => {
 
         {/* CTA Section */}
         <section className="py-16 bg-card/30">
-          <div className="container mx-auto px-6 text-center">
-            <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">
-              Need a Custom Solution?
-            </h2>
-            <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
-              Let's discuss your project requirements and build something extraordinary together.
-            </p>
-            <Button variant="glow" size="lg" asChild>
-              <Link to="/contact">
-                Start a Conversation
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </Button>
+          <div className="container mx-auto px-6">
+            <ScrollAnimationWrapper className="text-center">
+              <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">
+                Need a Custom Solution?
+              </h2>
+              <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
+                Let's discuss your project requirements and build something extraordinary together.
+              </p>
+              <Button variant="glow" size="lg" asChild>
+                <Link to="/contact">
+                  Start a Conversation
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Button>
+            </ScrollAnimationWrapper>
           </div>
         </section>
       </main>

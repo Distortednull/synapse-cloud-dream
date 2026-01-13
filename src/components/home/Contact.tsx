@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Send, Github, Twitter, Youtube, Linkedin } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { ScrollAnimationWrapper } from "@/components/ui/ScrollAnimationWrapper";
 
 const socials = [
   { name: "GitHub", icon: Github, href: "https://github.com" },
@@ -36,18 +37,18 @@ export function Contact() {
     <section className="py-24 bg-card/30">
       <div className="container mx-auto px-6">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
+          <ScrollAnimationWrapper className="text-center mb-12">
             <h2 className="section-title mb-4">
               Let's <span className="glow-text">Connect</span>
             </h2>
             <p className="section-subtitle mx-auto">
               Have a project in mind? Want to collaborate? Drop us a message.
             </p>
-          </div>
+          </ScrollAnimationWrapper>
 
           <div className="grid md:grid-cols-2 gap-12">
             {/* Contact Info */}
-            <div>
+            <ScrollAnimationWrapper direction="left" delay={0.1}>
               <div className="mb-8">
                 <h3 className="font-display font-semibold text-lg text-foreground mb-4">
                   Get in Touch
@@ -89,10 +90,11 @@ export function Contact() {
                   <span className="block mt-2 text-primary font-medium">— The Team</span>
                 </p>
               </div>
-            </div>
+            </ScrollAnimationWrapper>
 
             {/* Contact Form */}
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <ScrollAnimationWrapper direction="right" delay={0.2}>
+              <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <Input
                   type="text"
@@ -143,8 +145,9 @@ export function Contact() {
                     <Send className="w-4 h-4" />
                   </>
                 )}
-              </Button>
-            </form>
+                </Button>
+              </form>
+            </ScrollAnimationWrapper>
           </div>
         </div>
       </div>
