@@ -1,13 +1,22 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
-import { QuantumParticles } from "./QuantumParticles";
+import { lazy, Suspense } from "react";
+
+// Lazy load heavy 3D component
+const QuantumParticles = lazy(() => 
+  import("./QuantumParticles").then(m => ({ default: m.QuantumParticles }))
+);
 
 export function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-      {/* Quantum Particle Background */}
-      <QuantumParticles />
+      {/* Quantum Particle Background - Lazy loaded */}
+      <Suspense fallback={
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-glow/5" />
+      }>
+        <QuantumParticles />
+      </Suspense>
       
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-background/80 to-background pointer-events-none" />
