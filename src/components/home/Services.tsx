@@ -1,4 +1,5 @@
 import { ScrollAnimationWrapper } from "@/components/ui/ScrollAnimationWrapper";
+import { OptimizedImage } from "@/components/ui/OptimizedImage";
 
 import serviceAi from "@/assets/service-ai.jpg";
 import serviceFullstack from "@/assets/service-fullstack.jpg";
@@ -81,10 +82,11 @@ export function Services() {
             >
               <div className="group h-full p-6 rounded-2xl bg-card border border-border card-hover gradient-border">
                 <div className="w-full aspect-square rounded-xl overflow-hidden mb-4 group-hover:scale-105 transition-transform duration-300">
-                  <img 
+                  <OptimizedImage 
                     src={service.image} 
                     alt={service.title}
-                    className="w-full h-full object-cover"
+                    priority={index < 4}
+                    className="w-full h-full"
                   />
                 </div>
                 

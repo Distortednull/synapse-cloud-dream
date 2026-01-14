@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { preloadImages } from "@/components/ui/OptimizedImage";
 
 import slideshowAi from "@/assets/slideshow-ai.jpg";
 import slideshowQuantum from "@/assets/slideshow-quantum.jpg";
@@ -13,8 +14,18 @@ const slides = [
   { image: slideshowCode, label: "Software Development" },
 ];
 
+// Preload all slideshow images on module load
+const imageUrls = slides.map(s => s.image);
+preloadImages(imageUrls);
+
 export function TechSlideshow() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+
+  useEffect(() => {
+    // Mark images as loaded after preloading
+    preloadImages(imageUrls).then(() => setImagesLoaded(true));
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -26,6 +37,11 @@ export function TechSlideshow() {
 
   return (
     <div className="relative w-full h-full">
+      {/* Loading skeleton */}
+      {!imagesLoaded && (
+        <div className="absolute inset-0 bg-secondary/30 animate-pulse rounded-xl" />
+      )}
+      
       <AnimatePresence mode="wait">
         <motion.div
           key={currentIndex}
@@ -38,6 +54,8 @@ export function TechSlideshow() {
           <img
             src={slides[currentIndex].image}
             alt={slides[currentIndex].label}
+            loading="eager"
+            decoding="async"
             className="w-full h-full object-cover rounded-xl"
           />
           {/* Overlay gradient */}
