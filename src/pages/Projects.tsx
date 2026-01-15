@@ -3,9 +3,39 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Github } from "lucide-react";
-import { projects } from "@/data/projects";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+
+// Fallback to static data if no database projects
+import { projects as staticProjects } from "@/data/projects";
 
 const Projects = () => {
+  const { data: dbProjects = [], isLoading } = useQuery({
+    queryKey: ["public-projects"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("projects")
+        .select("*")
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  // Use database projects if available, otherwise fall back to static
+  const projects = dbProjects.length > 0 ? dbProjects.map((p: any) => ({
+    id: p.id,
+    title: p.title,
+    description: p.description,
+    category: p.category,
+    image: p.image_url || "/placeholder.svg",
+    tags: p.tags || [],
+    links: {
+      demo: p.demo_link,
+      github: p.github_link,
+    },
+  })) : staticProjects;
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -28,84 +58,88 @@ const Projects = () => {
         {/* Projects Grid */}
         <section className="py-8 pb-24">
           <div className="container mx-auto px-6">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {projects.map((project, index) => (
-                <Link
-                  key={project.id}
-                  to={`/projects/${project.id}`}
-                  className="group block"
-                >
-                  <div
-                    className="rounded-2xl bg-card border border-border card-hover overflow-hidden opacity-0 animate-fade-in-up"
-                    style={{ animationDelay: `${index * 0.1}s` }}
+            {isLoading ? (
+              <div className="text-center text-muted-foreground">Loading projects...</div>
+            ) : (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {projects.map((project: any, index: number) => (
+                  <Link
+                    key={project.id}
+                    to={`/projects/${project.id}`}
+                    className="group block"
                   >
-                    {/* Project Image */}
-                    <div className="relative aspect-video overflow-hidden">
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-                      <span className="absolute bottom-3 left-3 text-xs text-primary-foreground px-2 py-1 rounded-md bg-primary">
-                        {project.category}
-                      </span>
-                    </div>
-
-                    {/* Project Info */}
-                    <div className="p-6">
-                      <h3 className="font-display font-semibold text-lg text-foreground mb-2 group-hover:text-primary transition-colors">
-                        {project.title}
-                      </h3>
-
-                      <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
-                        {project.description}
-                      </p>
-
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {project.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="text-xs px-2 py-1 rounded-md bg-secondary text-muted-foreground"
-                          >
-                            {tag}
-                          </span>
-                        ))}
+                    <div
+                      className="rounded-2xl bg-card border border-border card-hover overflow-hidden opacity-0 animate-fade-in-up"
+                      style={{ animationDelay: `${index * 0.1}s` }}
+                    >
+                      {/* Project Image */}
+                      <div className="relative aspect-video overflow-hidden">
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+                        <span className="absolute bottom-3 left-3 text-xs text-primary-foreground px-2 py-1 rounded-md bg-primary">
+                          {project.category}
+                        </span>
                       </div>
 
-                      <div className="flex items-center gap-3 pt-4 border-t border-border">
-                        {project.links.demo && (
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
-                            onClick={(e) => {
-                              e.preventDefault();
-                              window.open(project.links.demo, '_blank');
-                            }}
-                          >
-                            <ExternalLink className="w-4 h-4 mr-1" />
-                            Demo
-                          </Button>
-                        )}
-                        {project.links.github && (
-                          <Button 
-                            variant="ghost" 
-                            size="sm"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              window.open(project.links.github, '_blank');
-                            }}
-                          >
-                            <Github className="w-4 h-4 mr-1" />
-                            Code
-                          </Button>
-                        )}
+                      {/* Project Info */}
+                      <div className="p-6">
+                        <h3 className="font-display font-semibold text-lg text-foreground mb-2 group-hover:text-primary transition-colors">
+                          {project.title}
+                        </h3>
+
+                        <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
+                          {project.description}
+                        </p>
+
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {project.tags.map((tag: string) => (
+                            <span
+                              key={tag}
+                              className="text-xs px-2 py-1 rounded-md bg-secondary text-muted-foreground"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+
+                        <div className="flex items-center gap-3 pt-4 border-t border-border">
+                          {project.links?.demo && (
+                            <Button 
+                              variant="ghost" 
+                              size="sm" 
+                              onClick={(e) => {
+                                e.preventDefault();
+                                window.open(project.links.demo, '_blank');
+                              }}
+                            >
+                              <ExternalLink className="w-4 h-4 mr-1" />
+                              Demo
+                            </Button>
+                          )}
+                          {project.links?.github && (
+                            <Button 
+                              variant="ghost" 
+                              size="sm"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                window.open(project.links.github, '_blank');
+                              }}
+                            >
+                              <Github className="w-4 h-4 mr-1" />
+                              Code
+                            </Button>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
         </section>
 

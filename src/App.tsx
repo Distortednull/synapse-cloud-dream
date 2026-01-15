@@ -13,6 +13,13 @@ import Blog from "./pages/Blog";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
+// Admin Pages
+import { AdminLayout } from "./pages/admin/AdminLayout";
+import { AdminDashboard } from "./pages/admin/AdminDashboard";
+import { AdminProjects } from "./pages/admin/AdminProjects";
+import { AdminBlogPosts } from "./pages/admin/AdminBlogPosts";
+import { AdminMessages } from "./pages/admin/AdminMessages";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -31,6 +38,15 @@ const App = () => (
           <Route path="/projects/:id" element={<ProjectDetail />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
+          
+          {/* Hidden Admin Panel */}
+          <Route path="/admin-bdtech-2026" element={<AdminLayout />}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="projects" element={<AdminProjects />} />
+            <Route path="blog" element={<AdminBlogPosts />} />
+            <Route path="messages" element={<AdminMessages />} />
+          </Route>
+          
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
