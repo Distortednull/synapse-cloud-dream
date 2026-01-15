@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Mail, Send, Github, Twitter, Youtube, Linkedin } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ScrollAnimationWrapper } from "@/components/ui/ScrollAnimationWrapper";
+import { supabase } from "@/integrations/supabase/client";
 
 const socials = [
   { name: "GitHub", icon: Github, href: "https://github.com" },
@@ -21,16 +22,34 @@ export function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    toast({
-      title: "Message sent!",
-      description: "Thanks for reaching out. We'll get back to you soon.",
-    });
-    
-    setIsSubmitting(false);
-    (e.target as HTMLFormElement).reset();
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      subject: formData.get("subject") as string,
+      message: formData.get("message") as string,
+    };
+
+    try {
+      const { error } = await supabase.from("contact_messages").insert([data]);
+      
+      if (error) throw error;
+      
+      toast({
+        title: "Message sent!",
+        description: "Thanks for reaching out. We'll get back to you soon.",
+      });
+      
+      (e.target as HTMLFormElement).reset();
+    } catch (error) {
+      toast({
+        title: "Failed to send message",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
