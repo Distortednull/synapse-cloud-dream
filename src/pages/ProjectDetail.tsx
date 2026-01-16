@@ -131,12 +131,12 @@ const ProjectDetail = () => {
           </div>
         </section>
 
-        {project.techStack?.length > 0 && (
+        {Array.isArray(project.techStack) && project.techStack.length > 0 && (
           <section className="py-16">
             <div className="container mx-auto px-6">
               <h2 className="text-2xl font-display font-bold mb-8">Tech Stack</h2>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {project.techStack.map((tech: any, index: number) => (
+                {(project.techStack as Array<{ name: string; description: string }>).map((tech, index: number) => (
                   <div key={tech.name || index} className="p-4 rounded-xl bg-card border border-border card-hover">
                     <h3 className="font-semibold text-foreground mb-1">{tech.name}</h3>
                     <p className="text-sm text-muted-foreground">{tech.description}</p>

@@ -1,6 +1,8 @@
-import { Link, Outlet, useLocation } from "react-router-dom";
-import { LayoutDashboard, FolderKanban, FileText, MessageSquare, Home } from "lucide-react";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { LayoutDashboard, FolderKanban, FileText, MessageSquare, Home, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/hooks/useAuth";
+import { Button } from "@/components/ui/button";
 
 const navigation = [
   { name: "Dashboard", href: "/admin-bdtech-2026", icon: LayoutDashboard },
@@ -11,6 +13,13 @@ const navigation = [
 
 export const AdminLayout = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/admin-bdtech-2026/login");
+  };
 
   return (
     <div className="min-h-screen bg-background flex">
@@ -20,6 +29,7 @@ export const AdminLayout = () => {
           <h1 className="font-display text-xl font-bold text-foreground">
             <span className="text-primary">BD</span>Tech Admin
           </h1>
+          <p className="text-xs text-muted-foreground mt-1 truncate">{user?.email}</p>
         </div>
 
         <nav className="flex-1 p-4 space-y-1">
@@ -43,7 +53,7 @@ export const AdminLayout = () => {
           })}
         </nav>
 
-        <div className="p-4 border-t border-border">
+        <div className="p-4 border-t border-border space-y-2">
           <Link
             to="/"
             className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
@@ -51,6 +61,14 @@ export const AdminLayout = () => {
             <Home className="w-5 h-5" />
             Back to Site
           </Link>
+          <Button
+            variant="ghost"
+            className="w-full justify-start gap-3 px-4 text-muted-foreground hover:text-foreground"
+            onClick={handleSignOut}
+          >
+            <LogOut className="w-5 h-5" />
+            Sign Out
+          </Button>
         </div>
       </aside>
 
